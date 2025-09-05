@@ -1,2 +1,1 @@
-web: otree prodserver1of2
-worker: otree prodserver2of2
+web: gunicorn otree.__main__:main --workers=4 --timeout 60
