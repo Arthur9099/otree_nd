@@ -28,10 +28,10 @@
                     <thead>
                         <tr>
                             <th>Round</th>
-                            <th>Cost of SC resilience investment (ECU)</th>
+                            <th>Cost of SC resilience spending (ECU)</th>
                             <th>Cost of SC disruption (ECU)</th>
                             <th>Total Costs (ECU)</th>
-                            <th>Expected Profit (ECU)</th>
+                            <th>Profit (ECU)</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -88,7 +88,7 @@
                 {{ formfields }}
            
             <div class="instructions">
-                Insert the amount of spending you would like to invest in the box to reduce both the <strong>probability</strong> and <strong>impact</strong> of disruption
+                Insert the amount (0 -100) you will spend on SC resilience in the box to reduce both the <strong>probability</strong> and the <strong>impact</strong> of disruption
                 
                 <br><br>
                 <small class="help-text">💡 Press Enter to submit your spending</small>
@@ -239,8 +239,8 @@
     }
 
     .icon {
-        width: 80px;
-        height: 80px;
+        width: 120px;
+        height: 120px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -689,7 +689,12 @@
         });
     });
 
-    
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.querySelector(".otree-btn-next");
+        if (btn) {
+            btn.textContent = "See result / Move to the next round";
+        }
+    });
 </script>
 
 {{ endblock }}
