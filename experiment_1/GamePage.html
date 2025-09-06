@@ -3,20 +3,20 @@
     <!-- Header Information -->
     <div class="header-info">
         <div class="info-item">
-            <div class="info-label">Round {{ player.round_number }} out of {{ C.NUM_ROUNDS }}</div>
             <div class="info-value">Current Status</div>
+            <div class="info-label">Round {{ player_round_minus_one }} out of {{ C.NUM_ROUNDS }}</div>
         </div>
         <div class="info-item">
-            <div class="info-label">Average cost: {{ average_cost }} ECU</div>
             <div class="info-value">Historical Average</div>
+            <div class="info-label">Average cost: {{ average_cost }} ECU</div>
         </div>
         <div class="info-item">
-            <div class="info-label">Initial profit: {{ initial_profit }} ECU</div>
             <div class="info-value">Starting Amount</div>
+            <div class="info-label">Initial profit: {{ initial_profit }} ECU</div>
         </div>
         <div class="info-item">
-            <div class="info-label">Current profit: {{ current_profit }} ECU</div>
             <div class="info-value">Current Balance</div>
+            <div class="info-label">Current profit: {{ current_profit }} ECU</div>
         </div>
     </div>
 
@@ -28,8 +28,8 @@
                     <thead>
                         <tr>
                             <th>Round</th>
-                            <th>Cost of SC resilience spending (ECU)</th>
-                            <th>Cost of SC disruption (ECU)</th>
+                            <th>Cost of SC Resilience (ECU)</th>
+                            <th>Cost of Disruption (ECU)</th>
                             <th>Total Costs (ECU)</th>
                             <th>Profit (ECU)</th>
                         </tr>
@@ -60,20 +60,26 @@
         <div class="investment-section">
             <h2 class="investment-title">Please type your amount of spending</h2>
             
-            <div class="icons-container">
+            <div class="bank-icon-container">
                 {{ if last_result }}
-                    <div class="icon bank-icon {{ if last_result.is_disrupted }}disrupted{{ else }}safe{{ endif }}"></div>
+                    <div class="icon bank-icon {{ if last_result.is_disrupted }}disrupted{{ else }}safe{{ endif }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                <path fill="currentColor" fill-rule="evenodd" d="M10 3.864L7.402 5.5h5.196L10 3.864Zm.267-2.196a.5.5 0 0 0-.533 0L1.939 6.577c-.424.267-.235.923.267.923h15.588c.502 0 .691-.656.267-.923l-7.794-4.91ZM1.5 17a1 1 0 0 1 1-1h15a1 1 0 1 1 0 2h-15a1 1 0 0 1-1-1ZM4 8.5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+            </svg>
+                    </div>
                 {{ else }}
-                    <div class="icon bank-icon safe"></div>
+                    <div class="icon bank-icon safe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                <path fill="currentColor" fill-rule="evenodd" d="M10 3.864L7.402 5.5h5.196L10 3.864Zm.267-2.196a.5.5 0 0 0-.533 0L1.939 6.577c-.424.267-.235.923.267.923h15.588c.502 0 .691-.656.267-.923l-7.794-4.91ZM1.5 17a1 1 0 0 1 1-1h15a1 1 0 1 1 0 2h-15a1 1 0 0 1-1-1ZM4 8.5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Zm3 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+            </svg>
+                    </div>
                 {{ endif }}
-                <div class="icon shield-icon"></div>
-                <div class="icon coins-icon"></div>
             </div>
 
             <div class="disruption-info">
                 {{ if last_result }}
                     <div class="disruption-status">
-                        Disruption in last round: 
+                        Disruption in this round:
                         <strong>{{ if last_result.is_disrupted }}YES{{ else }}NO{{ endif }}</strong>
                     </div>
                     <div class="disruption-cost">
@@ -85,13 +91,26 @@
                 {{ endif }}
             </div>
 
-                {{ formfields }}
+            <div class="icons-container">
+                <div class="icon shield-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 384 480">
+                        <path fill="currentColor" d="m192 5l192 86v128q0 89-55 162.5T192 475q-82-20-137-93.5T0 219V91zm-43 342l171-171l-30-30l-141 140l-55-55l-30 30z"/>
+                    </svg>
+                </div>
+                <div class="icon coins-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M0 405.3V448c0 35.3 86 64 192 64s192-28.7 192-64v-42.7C342.7 434.4 267.2 448 192 448S41.3 434.4 0 405.3zM320 128c106 0 192-28.7 192-64S426 0 320 0S128 28.7 128 64s86 64 192 64zM0 300.4V352c0 35.3 86 64 192 64s192-28.7 192-64v-51.6c-41.3 34-116.9 51.6-192 51.6S41.3 334.4 0 300.4zm416 11c57.3-11.1 96-31.7 96-55.4v-42.7c-23.2 16.4-57.3 27.6-96 34.5v63.6zM192 160C86 160 0 195.8 0 240s86 80 192 80s192-35.8 192-80s-86-80-192-80zm219.3 56.3c60-10.8 100.7-32 100.7-56.3v-42.7c-35.5 25.1-96.5 38.6-160.7 41.8c29.5 14.3 51.2 33.5 60 57.2z"/>
+                    </svg>
+                </div>
+            </div>
+
+            {{ formfields }}
            
             <div class="instructions">
                 Insert the amount (0 -100) you will spend on SC resilience in the box to reduce both the <strong>probability</strong> and the <strong>impact</strong> of disruption
                 
                 <br><br>
-                <small class="help-text">💡 Press Enter to submit your spending</small>
+                <small class="help-text">Click on the Bottom below or Press Enter to submit your spending</small>
             </div>
 
             {{ next_button }}
@@ -222,13 +241,20 @@
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         text-align: center;
-    }
+        height: calc(70vh + 50px);
+}
 
     .investment-title {
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 30px;
         color: #333;
+    }
+
+    .bank-icon-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
     }
 
     .icons-container {
@@ -250,35 +276,26 @@
 
     .bank-icon {
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        width: 200px;
+        height: 200px;
+    }
+
+    .bank-icon svg {
+        width: 100%;  
+        height: 100%; 
     }
 
     .bank-icon.safe {
-        background: linear-gradient(135deg, #95a5a6, #b2bbb5);
-        color: white;
+        color: #95a5a6;
     }
 
     .bank-icon.disrupted {
-        background: linear-gradient(135deg, #e74c3c, #c0392b);
-        color: white;
-        animation: pulse 1.5s infinite;
-    }
-
-    .bank-icon::before {
-        content: '🏦';
-        font-size: 30px;
-        filter: grayscale(100%) brightness(0) invert(1);
-    }
-
-    .bank-icon.safe::before {
-        content: '🏦';
-        font-size: 30px;
-        filter: grayscale(100%) brightness(0) invert(1);
-    }
-
-    .bank-icon.disrupted::before {
-        content: '🏦';
-        font-size: 30px;
-        filter: grayscale(100%) brightness(0) invert(1);
+        color: #e74c3c;
+        animation: pulse 0.8s infinite;
     }
 
     @keyframes pulse {
@@ -286,7 +303,7 @@
             transform: scale(1);
         }
         50% {
-            transform: scale(1.05);
+            transform: scale(1.25);
         }
         100% {
             transform: scale(1);
@@ -294,39 +311,33 @@
     }
 
     .shield-icon {
-        background: linear-gradient(135deg, #4caf50, #81c784);
-        border-radius: 15px;
+        color: #4caf50;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
     }
 
-    .shield-icon::before {
-        content: '✓';
-        color: white;
-        font-size: 30px;
-        font-weight: bold;
+    .shield-icon svg {
+        width: 100%;
+        height: 100%;
     }
 
     .coins-icon {
-        background: linear-gradient(135deg, #ffc107, #ffeb3b);
-        border-radius: 50%;
+        color: #ffc107;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
     }
 
-    .coins-icon::before {
-        content: '€';
-        color: white;
-        font-size: 30px;
-        font-weight: bold;
+    .coins-icon svg {
+        width: 100%;
+        height: 100%;
     }
 
     .disruption-info {
-        background-color: #f8f9fa;
+        background-color: #F9F3EF;
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;
@@ -356,6 +367,7 @@
         gap: 10px;
         padding: 10px;
         background: #f8f9fa;
+        height: 50px;
     }
 
     .page-btn {
@@ -388,7 +400,7 @@
         color: #666;
     }
 
-    /* oTree form styling */
+    
     .form-group {
         margin-bottom: 20px;
     }
@@ -689,6 +701,7 @@
         });
     });
 
+    // Change the text of the next button
     document.addEventListener("DOMContentLoaded", function() {
         const btn = document.querySelector(".otree-btn-next");
         if (btn) {

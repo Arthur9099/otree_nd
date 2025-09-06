@@ -8,10 +8,10 @@ Investment Game - Supply Chain Resilience
 class C(BaseConstants):
     NAME_IN_URL = 'otree_nd'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 100
-    INITIAL_PROFIT = 10000  # C₀
-    DISRUPTION_COST = 2000  # C_I (base disruption cost)
-    BASIC_PROBABILITY = 5   # p₀ (base probability in %)
+    NUM_ROUNDS = 30
+    INITIAL_PROFIT = 10000  # C₀ (100 rounds)
+    DISRUPTION_COST = 2000  # C_I (baseline disruption impact)
+    BASIC_PROBABILITY = 5   # p₀ (baseline probability)
 
 class Subsession(BaseSubsession):
     pass
@@ -99,6 +99,8 @@ class GamePage(Page):
                 'initial_profit': C.INITIAL_PROFIT,
                 'all_results': results,
             }
+
+        player_round_minus_one = player.round_number - 1
         num_rounds_plus_one = player.round_number + 1
         num_rounds_minus_one = player.round_number - 1
         
@@ -113,6 +115,7 @@ class GamePage(Page):
             game_completed=game_completed,
             final_stats=final_stats,
             round_calculated=player.round_calculated,
+            player_round_minus_one=player_round_minus_one,
             num_rounds_plus_one=num_rounds_plus_one,
             num_rounds_minus_one=num_rounds_minus_one,
         )
@@ -130,11 +133,9 @@ class GamePage(Page):
             # CORRECTED LOGIC: Following the mathematical formulas
             # p(x) = p₀ - p₀ * (x/100) = 5 - 5 * (x/100) = 5 * (1 - x/100)
             disruption_probability = C.BASIC_PROBABILITY * (1 - investment / 100)
-            disruption_probability = max(0, disruption_probability)
             
             # C_I(x) = C_I - C_I * (x/100) = C_I * (1 - x/100)
             disruption_impact = C.DISRUPTION_COST * (1 - investment / 100)
-            disruption_impact = max(0, int(disruption_impact))  # Ensure non-negative integer
             
             # Generate random number (0-100) to check for disruption
             random_number = random.uniform(0, 100)
