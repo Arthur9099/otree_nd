@@ -4,7 +4,12 @@ SESSION_CONFIGS = [
     dict(
         name='experiment_1',
         app_sequence=['experiment_1'],
-        num_demo_participants=3,
+        num_demo_participants=40,
+    ),
+    dict(
+        name='experiment_2',
+        app_sequence=['experiment_2'],
+        num_demo_participants=40,
     ),
 ]
 
@@ -33,6 +38,9 @@ ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """ """
+
 DEBUG = False
+
+
 
 SECRET_KEY = '8567665405115'

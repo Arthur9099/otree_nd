@@ -256,7 +256,6 @@ class GamePage(Page):
                 expected_profit=player.expected_profit,
             )
 
-
 class Results(Page):
     @staticmethod
     def is_displayed(player: Player):
@@ -302,5 +301,36 @@ class Results(Page):
             num_disruptions=num_disruptions,
             profit_change=profit_change,
         )
+
+# Export Excel
+def custom_export(players):
+    # Sắp xếp players theo player_id rồi theo round_number
+    players = sorted(players, key=lambda p: (p.id_in_group, p.round_number))
+
+    # Header
+    yield [
+        'player_id',
+        'round_number',
+        'investment',
+        'is_disrupted',
+        'cost_of_disruption',
+        'total_costs',
+        'expected_profit',
+    ]
+
+    for p in players:
+        # Lấy bản ghi CombinedResult của player trong round đó
+        results = CombinedResult.filter(player=p)
+        for r in results:
+            yield [
+                p.id_in_group,
+                p.round_number,
+                r.investment,
+                1 if r.is_disrupted else 0,
+                r.cost_of_disruption,
+                r.total_costs,
+                r.expected_profit,
+            ]
+  
     
 page_sequence = [LandingPage, GamePage, Results]
